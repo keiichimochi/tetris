@@ -485,24 +485,77 @@ function update(timestamp) {
     requestAnimationFrame(update);
 }
 
-// キーボード制御
+// モバイルコントロール
+const leftBtn = document.getElementById('leftBtn');
+const rightBtn = document.getElementById('rightBtn');
+const dropBtn = document.getElementById('dropBtn');
+const rotateBtn = document.getElementById('rotateBtn');
+const hardDropBtn = document.getElementById('hardDropBtn');
+
+// タッチイベントハンドラ
+leftBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (currentPiece && isGameRunning) {
+        currentPiece.move(-1, 0);
+    }
+});
+
+rightBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (currentPiece && isGameRunning) {
+        currentPiece.move(1, 0);
+    }
+});
+
+dropBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (currentPiece && isGameRunning) {
+        softDropping = true;
+    }
+});
+
+dropBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    softDropping = false;
+});
+
+rotateBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (currentPiece && isGameRunning) {
+        currentPiece.rotate();
+    }
+});
+
+hardDropBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (currentPiece && isGameRunning) {
+        currentPiece.hardDrop();
+    }
+});
+
+// ゲーボード制御を修正（タッチデバイスとの互換性のため）
 document.addEventListener('keydown', (e) => {
     if (!currentPiece || !isGameRunning) return;
 
     switch (e.key) {
         case 'ArrowLeft':
+            e.preventDefault();
             currentPiece.move(-1, 0);
             break;
         case 'ArrowRight':
+            e.preventDefault();
             currentPiece.move(1, 0);
             break;
         case 'ArrowDown':
+            e.preventDefault();
             softDropping = true;
             break;
         case 'ArrowUp':
+            e.preventDefault();
             currentPiece.rotate();
             break;
         case ' ':
+            e.preventDefault();
             currentPiece.hardDrop();
             break;
     }
@@ -513,6 +566,34 @@ document.addEventListener('keyup', (e) => {
         softDropping = false;
     }
 });
+
+// ゲーム開始時にキャンバスサイズを調整
+function resizeGame() {
+    const container = document.querySelector('.game-area');
+    const maxWidth = Math.min(window.innerWidth - 40, 400);
+    const scale = maxWidth / (COLS * BLOCK_SIZE);
+    
+    if (window.innerWidth <= 768) {
+        app.renderer.resize(COLS * BLOCK_SIZE * scale, ROWS * BLOCK_SIZE * scale);
+        app.stage.scale.set(scale);
+        
+        nextPieceApp.renderer.resize(4 * BLOCK_SIZE * scale, 4 * BLOCK_SIZE * scale);
+        nextPieceApp.stage.scale.set(scale);
+    } else {
+        app.renderer.resize(COLS * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+        app.stage.scale.set(1);
+        
+        nextPieceApp.renderer.resize(4 * BLOCK_SIZE, 4 * BLOCK_SIZE);
+        nextPieceApp.stage.scale.set(1);
+    }
+}
+
+// リサイズイベントの追加
+window.addEventListener('resize', resizeGame);
+window.addEventListener('orientationchange', resizeGame);
+
+// 初期化時にリサイズを実行
+resizeGame();
 
 // スタートボタンの制御
 document.getElementById('startButton').addEventListener('click', () => {

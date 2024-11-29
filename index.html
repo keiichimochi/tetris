@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>派手なテトリス</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -34,6 +34,18 @@
                 <canvas id="nextPieceCanvas"></canvas>
             </div>
         </div>
+    </div>
+    <!-- モバイルコントロール -->
+    <div class="mobile-controls">
+        <div class="control-row">
+            <button id="rotateBtn" class="control-btn">↻</button>
+        </div>
+        <div class="control-row">
+            <button id="leftBtn" class="control-btn">←</button>
+            <button id="dropBtn" class="control-btn">↓</button>
+            <button id="rightBtn" class="control-btn">→</button>
+        </div>
+        <button id="hardDropBtn" class="control-btn hard-drop">⤓</button>
     </div>
     <!-- BGM -->
     <audio id="bgm" src="./pu.mp3" loop></audio>
