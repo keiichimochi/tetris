@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>派手なテトリス</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-area">
+            <div id="startScreen" class="start-screen">
+                <h1>テトリス</h1>
+                <button id="startButton" class="start-button">ゲームスタート</button>
+                <div class="volume-control">
+                    <label>
+                        BGM: <input type="range" id="bgmVolume" min="0" max="1" step="0.1" value="0.5">
+                    </label>
+                    <label>
+                        効果音: <input type="range" id="sfxVolume" min="0" max="1" step="0.1" value="0.5">
+                    </label>
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+            <div id="effectCanvas"></div>
+        </div>
+        <div class="side-panel">
+            <div class="score-board">
+                <h2>スコア: <span id="score">0</span></h2>
+                <h3>レベル: <span id="level">1</span></h3>
+            </div>
+            <div class="next-piece">
+                <h3>次のピース</h3>
+                <canvas id="nextPieceCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+    <!-- BGM -->
+    <audio id="bgm" src="pu.mp3" loop></audio>
+    <!-- 効果音 -->
+    <audio id="moveSound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="rotateSound" src="https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3"></audio>
+    <audio id="dropSound" src="https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3"></audio>
+    <audio id="clearSound" src="https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3"></audio>
+    <audio id="gameOverSound" src="https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3"></audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.3/pixi.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html> 
